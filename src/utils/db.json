@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "one@gmail.ru",
+      "password": "1"
+    },
+    {
+      "id": 2,
+      "email": "two@gmail.ru",
+      "password": "2"
+    }
+  ],
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Ivan",
+      "phone": "89638527441",
+      "email": "Ivan@gmail.ru"
+    },
+    {
+      "id": 2,
+      "name": "Andrey",
+      "phone": "89652356987",
+      "email": "Andrey@gmail.ru"
+    },
+    {
+      "id": 3,
+      "name": "Anton",
+      "phone": "89874561223",
+      "email": "Anton@gmail.ru"
+    },
+    {
+      "id": 4,
+      "name": "Evgeniy",
+      "phone": "85692365689",
+      "email": "Evgeniy@gmail.ru"
+    }
+  ]
+}
