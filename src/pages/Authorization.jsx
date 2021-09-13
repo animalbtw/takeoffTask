@@ -1,5 +1,9 @@
 import * as React from 'react';
 import {Button, createStyles, makeStyles, Paper, TextField, Typography} from "@material-ui/core";
+import {connect} from "react-redux";
+import {Login} from "../store/actions/userActions";
+import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => createStyles({
   container: {
@@ -25,16 +29,36 @@ const useStyles = makeStyles((theme) => createStyles({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  error: {
+    color: 'red'
   }
 }))
 
-const Authorization = () => {
+const Authorization = (props) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [fetchedUsers, setFetchedUsers] = React.useState([]);
+  const [error, setError] = React.useState(false)
   const classes = useStyles()
+  const history = useHistory()
+
+  React.useEffect(() => {
+    fetch('http://localhost:3000/users')
+      .then(res => res.json())
+      .then(data => setFetchedUsers(data))
+  }, [])
 
   const handleLogin = () => {
-
+    const {dispatch} = props
+    const usersEmail = fetchedUsers.map(item => item.email == email)
+    const usersPassword = fetchedUsers.map(item => item.password == password)
+    if (usersEmail[0] && usersPassword[0]) {
+      dispatch(Login())
+      history.push('/')
+    } else {
+      setError(true)
+    }
   }
 
   return (
@@ -49,6 +73,15 @@ const Authorization = () => {
           >
             Войти
           </Typography>
+          {
+            error ? (
+              <Typography
+                className={classes.error}
+              >
+                Неверные данные
+              </Typography>
+            ) : null
+          }
           <div>
             <TextField
               onChange={(e) => setEmail(e.target.value)}
@@ -84,4 +117,8 @@ const Authorization = () => {
   );
 };
 
-export default Authorization;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(Authorization);

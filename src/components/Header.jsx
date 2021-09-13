@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Button, createStyles, makeStyles} from "@material-ui/core";
 import {connect} from "react-redux";
+import {Logout} from "../store/actions/userActions";
 
 const useStyles = makeStyles((theme) => createStyles({
   wrapper: {
@@ -17,16 +18,19 @@ const useStyles = makeStyles((theme) => createStyles({
   }
 }))
 
-const Header = ({user, setOpen}) => {
+const Header = (props) => {
   const handleLogOut = () => {
-    console.log('Выход')
+    const {dispatch} = props
+    dispatch(Logout())
   }
+
   const classes = useStyles()
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.container}>
         {
-          !user.isLogin ? null: (
+          !props.user.isLogin ? null: (
             <Button
               variant="outlined"
               color="primary"
